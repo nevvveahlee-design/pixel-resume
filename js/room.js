@@ -185,6 +185,11 @@
     plant2.className = 'room-deco room-plant2';
     room.appendChild(plant2);
 
+    // 书桌前面的地板也空，再放一盆圆叶绿植
+    var plant3 = document.createElement('div');
+    plant3.className = 'room-deco room-plant3';
+    room.appendChild(plant3);
+
     var mirror = document.createElement('div');
     mirror.className = 'room-deco room-mirror';
     room.appendChild(mirror);

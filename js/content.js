@@ -135,7 +135,11 @@ window.RESUME_DATA = {
       tabs: [{
         label: 'Vibe-Coding & 产品设计',
         blocks: [
-          { type: 'meta', items: [['角色', 'Vibe-Coding & 产品设计'], ['时间', '2026.07 – 至今']]},
+          { type: 'meta', items: [
+            ['角色', 'Vibe-Coding & 产品设计'],
+            ['时间', '2026.07 – 至今'],
+            ['项目地址', 'https://nevvveahlee-design.github.io/ai-strategy-dossier/']
+          ]},
           { type: 'metrics', items: [
             { value: '27', label: '处理真实机构报告' },
             { value: '75', label: '沉淀经溯源校验的分析方法' },

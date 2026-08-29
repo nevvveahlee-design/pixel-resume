@@ -48,7 +48,19 @@
       var dl = el('dl', 'block-meta');
       b.items.forEach(function (pair) {
         var dt = el('dt', null, pair[0]);
-        var dd = el('dd', null, pair[1]);
+        var dd = el('dd');
+        // 值是链接就做成可点的 <a>，href 直接赋值不走 innerHTML，跟其它地方一样安全
+        if (/^https?:\/\//.test(pair[1])) {
+          var a = document.createElement('a');
+          a.href = pair[1];
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.className = 'meta-link';
+          a.textContent = pair[1];
+          dd.appendChild(a);
+        } else {
+          dd.textContent = pair[1];
+        }
         dl.appendChild(dt);
         dl.appendChild(dd);
       });

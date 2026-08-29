@@ -42,9 +42,10 @@
 
 ## Pixel Interior 客厅包再补充（生活小物）
 - `sprites/floor_lamp.png` —— 取自 `decorations_LRK.png`，未改色，放在书桌旁。
-- `sprites/clock.png` —— 取自 `decorations_LRK.png`，圆钟，一开始因为跟"双铃闹钟"重复没用上；房间加大之后软木板和窗户之间空出一段墙，重新捡回来用了，未改色。
+- `sprites/clock.png` —— 取自 `decorations_LRK.png`，圆钟，一开始因为跟"双铃闹钟"重复没用上；房间加大之后软木板和窗户之间空出一段墙，重新捡回来用了。跟其它家具统一描边风格时**把描边（明度<0.15 的像素）收窄改成跟其它家具一致的深棕色**，钟面颜色没动。
 - `sprites/mirror.png` —— 取自 `decorations_LRK.png`，最终没有采用（换成了 CSS 画的椭圆镜子），文件还留着没删。
 - `sprites/plant2.png` —— 取自 `livingroom_LRK.png` 里的 `plant2.png`，跟已有的那盆绿植不同姿态，未改色，填衣柜和书桌之间的地板空隙。
+- `sprites/plant3.png` —— 取自 `livingroom_LRK.png` 里的 `r2c3.png`，圆叶丛生盆栽，又一个不同姿态，未改色，放在书桌和落地灯之间的地板空隙。
 
 ## Pixel Interior 客厅包再补充（书架换新）
 - `sprites/bookshelf.png` —— 取自 `cabinets_LRK.png`，换成细节更丰富、书脊颜色更多样的一款（原来那款太素）。**代码重新上色**：书架框架/隔板部分调成跟床/衣柜/收纳盒同一家族的暖黄色调，书脊本身饱和度较高的颜色保留不动，所以书还是五颜六色的，只有木框变了色。
@@ -55,7 +56,7 @@
 - 来源：https://christianperich.itch.io/pixel-life-office-essentials（免费文件是其中的 "Pixel Life - Desk Essentials.zip"，其余安防/家具扩展内容需要付费，没有用到）
 - License：个人 + 商业项目免费使用，允许修改，不能把原始文件单独转卖或重新分发。
 - 用在本项目的文件：
-  - `sprites/desk.png` —— 取自 `spritesheet.png` 里唯一一款书桌（浅橡木色，带抽屉细节），**代码重新上色**成跟房间 `--wood` 变量同色系的暖棕色（保留明度结构，只换色相/饱和度），替换掉第一版从 bitglow 客厅包里裁的那个纯色桌子。
+  - `sprites/desk.png` —— 取自 `spritesheet.png` 里唯一一款书桌（浅橡木色，带抽屉细节），**代码重新上色**成跟房间 `--wood` 变量同色系的暖棕色（保留明度结构，只换色相/饱和度），替换掉第一版从 bitglow 客厅包里裁的那个纯色桌子。后来跟其它素材放在一起对比发现描边颜色比其它家具浅一截，又**单独把描边（明度<0.24 的像素）统一改成跟其它家具一致的深棕色**，桌面/桌腿本身的颜色没动。
 
 ## Pixel Paintings Pack – Framed Art for Cozy Interiors
 - 作者：Biruk Okami
