@@ -1,0 +1,13 @@
+# 素材包的原始整张素材表——license 只允许用裁好的单张图（assets/room/sprites/ 里那些），
+# 不允许把整张素材表转卖/重新分发，所以不进公开仓库，只留在本地方便以后需要时再裁新图
+assets/room/bitglow_bedroom/
+assets/room/bitglow_livingroom/
+assets/room/biruk_paintings/
+assets/room/bitglow_electronics/
+
+# 同理，下载下来的原始压缩包也不进公开仓库
+assets/room/*.zip
+assets/room/*.rar
+
+# 下载素材时的临时文件夹
+**/_download/

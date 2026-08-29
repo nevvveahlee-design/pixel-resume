@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>李梦媛 · 像素小屋简历</title>
+<meta name="description" content="李梦媛的互动式像素风简历房间">
+<link rel="stylesheet" href="css/base.css?v=14">
+<link rel="stylesheet" href="css/room.css?v=14">
+<link rel="stylesheet" href="css/panel.css?v=14">
+<link rel="stylesheet" href="css/resume-mode.css?v=14">
+</head>
+<body>
+
+  <header class="hud">
+    <div class="hud-name-plate">
+      <span id="hudName" class="hud-name"></span>
+      <span id="hudNameEn" class="hud-name-en"></span>
+      <span id="hudTagline" class="hud-tagline"></span>
+      <span id="hudProgress" class="hud-progress"></span>
+    </div>
+    <div class="hud-actions">
+      <button id="soundToggle" class="pixel-btn" aria-pressed="false">🔊 音效</button>
+      <button id="bgmToggle" class="pixel-btn" aria-pressed="false">🎵 音乐</button>
+      <button id="modeToggle" class="pixel-btn" aria-pressed="false">📄 简历模式</button>
+    </div>
+  </header>
+
+  <main class="room-frame">
+    <div class="room" id="room" aria-label="可点击的像素小屋，点击道具查看对应经历"></div>
+  </main>
+
+  <nav class="item-bar" id="itemBar" aria-label="经历板块快捷入口"></nav>
+
+  <section id="resumeMode" class="resume-mode" hidden></section>
+
+  <div class="overlay" id="overlay" hidden>
+    <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+      <div class="panel-header">
+        <h2 class="panel-title" id="panelTitle"></h2>
+        <button class="panel-close pixel-btn" id="panelClose" aria-label="关闭">✕</button>
+      </div>
+      <div class="panel-tabs" id="panelTabs" role="tablist" hidden></div>
+      <div class="panel-body" id="panelBody"></div>
+    </div>
+  </div>
+
+  <script src="js/content.js?v=14"></script>
+  <script src="js/sound.js?v=14"></script>
+  <script src="js/bgm.js?v=14"></script>
+  <script src="js/pixelate.js?v=14"></script>
+  <script src="js/render.js?v=14"></script>
+  <script src="js/typewriter.js?v=14"></script>
+  <script src="js/contact.js?v=14"></script>
+  <script src="js/character.js?v=14"></script>
+  <script src="js/panel.js?v=14"></script>
+  <script src="js/room.js?v=14"></script>
+  <script src="js/greeting.js?v=14"></script>
+  <script src="js/main.js?v=14"></script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+/* 房间场景（占位美术版）+ 热点道具 + 移动端底部图标栏 */
+.room-frame {
+  width: min(100vw, 1200px);
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+.room {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--wall);
+  border: 4px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.3);
+  image-rendering: pixelated;
+}
+
+/* NPC 引导对话框：进房间时在角色头顶弹出，打字机逐句显现，点击推进/跳过 */
+.npc-bubble {
+  position: absolute;
+  left: 48%;
+  bottom: 33%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: min(300px, 62%);
+  background: var(--paper);
+  background-image: repeating-linear-gradient(0deg, rgba(139,111,71,0.05) 0 2px, transparent 2px 4px);
+  border: 3px solid var(--border);
+  border-radius: 3px;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+  padding: 16px 16px 22px;
+  cursor: pointer;
+}
+.npc-bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--border);
+}
+.npc-bubble::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid var(--paper);
+  z-index: 1;
+}
+.npc-bubble-tag {
+  position: absolute;
+  top: -13px;
+  left: 12px;
+  background: var(--accent);
+  color: var(--border);
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 10px;
+  font-family: var(--font-pixel);
+  font-weight: bold;
+  font-size: 0.7rem;
+}
+.npc-bubble-skip {
+  position: absolute;
+  top: -13px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--paper);
+  font-size: 0.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+.npc-bubble-skip:hover { background: #fff; }
+.npc-bubble-text {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--ink);
+  min-height: 3.2em;
+}
+.npc-bubble-next {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  font-family: var(--font-pixel);
+  font-size: 0.68rem;
+  color: var(--wood);
+  opacity: 0;
+}
+.npc-bubble-next.is-ready {
+  opacity: 1;
+  animation: bubble-next-bounce 1.4s ease-in-out infinite;
+}
+@keyframes bubble-next-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .npc-bubble-next.is-ready { animation: none; }
+}
+@media (max-width: 700px) {
+  .npc-bubble { width: min(260px, 78%); bottom: 36%; }
+}
+
+/* 降饱和层：家具素材颜色比木头背景鲜艳很多（撞色感很重），叠一层中性灰、
+   用 saturation 混合模式把整体饱和度往下拉一截，跟暖木背景更贴 */
+.room-desaturate {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: #888;
+  opacity: 0.22;
+  mix-blend-mode: saturation;
+}
+
+/* 统一色调层：家具素材来自好几个不同的免费包，描边粗细、饱和度不完全一致，
+   用一层暖光叠加（overlay 混合模式）把整个房间"罩"在同一种光线下，缓解拼贴感，
+   顺带在四角加暗角，让房间有点进深，不再是一块平光。 */
+.room-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 15%, rgba(255,214,140,0.3), transparent 70%),
+    radial-gradient(ellipse 95% 95% at 50% 55%, transparent 62%, rgba(110,60,25,0.16) 100%),
+    linear-gradient(180deg, rgba(255,200,140,0.1) 0%, rgba(120,70,30,0.06) 100%);
+  mix-blend-mode: soft-light;
+}
+
+/* 落地家具的接触阴影：椭圆虚影，暗示"东西真的踩在地板上"而不是贴在墙纸上，
+   顺带给房间一点透视进深感（大耳朵图图那种平面但有立体暗示的画法） */
+.room-bed::after,
+.room-desk::after,
+.room-floor-lamp::after,
+.hotspot[data-section="education"]::after,
+.hotspot[data-section="cosplay"]::after,
+.hotspot[data-section="photocards"]::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 72%;
+  height: 9px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(20,10,5,0.4) 0%, rgba(20,10,5,0.15) 55%, transparent 78%);
+  pointer-events: none;
+}
+
+/* 环境粒子：飘浮的像素光尘，纯装饰、不可点击，营造暖光照进屋子的氛围感 */
+.room-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+.room-particle {
+  position: absolute;
+  bottom: 6%;
+  width: 3px;
+  height: 3px;
+  background: var(--lamp);
+  box-shadow: 0 0 4px 1px rgba(255, 210, 122, 0.6);
+  opacity: 0;
+  animation-name: particle-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes particle-float {
+  0% { transform: translate(0, 0); opacity: 0; }
+  12% { opacity: 0.75; }
+  50% { transform: translate(var(--drift-x, 10px), calc(var(--drift-y, -120px) * 0.5)); }
+  88% { opacity: 0.4; }
+  100% { transform: translate(calc(var(--drift-x, 10px) * 2), var(--drift-y, -120px)); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .room-particles { display: none; }
+}
+
+/* 木墙：真实像素画墙板贴图（横向平铺），自带顶部装饰线和底部踢脚线 */
+.room::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 28% 0;
+  background-image: url('../assets/room/sprites/wall_tile.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-position: bottom left;
+  pointer-events: none;
+}
+/* 木地板：竖向木板缝理（双色交替 + 缝隙线），铺满地板区（下 28%） */
+.room::after {
+  content: '';
+  position: absolute;
+  inset: 72% 0 0 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.22) 0 2px, transparent 2px 26px),
+    repeating-linear-gradient(90deg, var(--floor) 0 13px, var(--floor-dark) 13px 26px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0 2px, transparent 2px 12px);
+  pointer-events: none;
+}
+
+/* 图层顺序（从下到上）：地板/墙纸理 → 地毯 → 其它装饰物（床/桌子/挂件等）→ 可点击家具。
+   之前地毯没设 z-index，跟 .room::after（地板纹理伪元素，属于"生成内容"，
+   默认排在同层级最后面）撞在一起时反而被地板纹理盖住了，人眼看起来"地毯消失了"。 */
+.room-deco { position: absolute; pointer-events: none; z-index: 2; }
+.room-rug { z-index: 1; }
+
+/* 3x3 窗格自己用 CSS 画（现成素材只有 2x2 的图，格子间距对不上 3x3，
+   直接拿真实素材硬做九宫格线条位置会错开），玻璃用渐变模拟天光 */
+.room-window {
+  position: absolute;
+  left: 65%; top: 2%; width: 18%; height: 38%;
+  background: linear-gradient(180deg, #cdeafd 0%, #a9d8f5 60%, #8fc4ea 100%);
+  border: 5px solid var(--wood);
+  outline: 3px solid var(--border);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,0.4);
+  filter: drop-shadow(-2px 3px 0 rgba(0,0,0,0.3));
+  pointer-events: none;
+}
+.room-window .mullion-v1,
+.room-window .mullion-v2 {
+  position: absolute; top: 0; height: 100%; width: 4px;
+  background: var(--wood); box-shadow: 0 0 0 1px var(--border);
+}
+.room-window .mullion-v1 { left: calc(33.33% - 2px); }
+.room-window .mullion-v2 { left: calc(66.66% - 2px); }
+.room-window .mullion-h1,
+.room-window .mullion-h2 {
+  position: absolute; left: 0; width: 100%; height: 4px;
+  background: var(--wood); box-shadow: 0 0 0 1px var(--border);
+}
+.room-window .mullion-h1 { top: calc(33.33% - 2px); }
+.room-window .mullion-h2 { top: calc(66.66% - 2px); }
+.room-window .sill {
+  position: absolute; left: -8%; right: -8%; bottom: -12%; height: 12%;
+  background: var(--wood); border: 3px solid var(--border); border-radius: 2px;
+}
+
+.room-rug {
+  position: absolute;
+  left: 30%; top: 66%; width: 34%; height: 32%;
+  background-image: url('../assets/room/sprites/rug_big.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.25));
+}
+
+.room-plant {
+  position: absolute;
+  width: 5%; height: 11%;
+  background-image: url('../assets/room/sprites/plant.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.25));
+}
+
+.room-bed {
+  position: absolute;
+  left: 29%; top: 40%; width: 20%; height: 34%;
+  background-image: url('../assets/room/sprites/bed_pink.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 3px 0 rgba(0,0,0,0.3));
+}
+
+.room-desk {
+  position: absolute;
+  left: 77%; top: 50%; width: 23%; height: 24%;
+  background-image: url('../assets/room/sprites/desk.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 3px 0 rgba(0,0,0,0.3));
+}
+
+.room-wallart {
+  position: absolute;
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.25));
+  left: 16%; top: 9%; width: 10%; height: 15%;
+  background-image: url('../assets/room/sprites/painting_sunset.png');
+}
+
+/* 找了几轮素材包都没挖到一面"够宽"的挂镜（要么太窄的立镜，要么是带桌腿的梳妆台，
+   装在墙上会很奇怪），圆镜是纯几何图形，直接用 CSS 画一个，形状简单不会翻车。
+   第一版被吐槽像脸盆——纯色圆+粗边框确实缺少"这是玻璃"的视觉线索，
+   这版加了：细金色内圈（脸盆没有金边）、一道斜向高光反光条（玻璃反光的标准画法）、
+   顶部一个挂钩（暗示"挂墙上"而不是"放着的盆"）。 */
+.room-mirror {
+  position: absolute;
+  left: 14%; width: 10%; height: 13%; bottom: 44%;
+  background: linear-gradient(135deg, #dcedf7 0%, #b8d4e6 55%, #93b8cf 100%);
+  border: 3px solid var(--wood);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 2px #e8c887,
+    inset 0 0 0 4px rgba(0,0,0,0.15),
+    0 3px 0 rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+.room-mirror::before {
+  /* 斜向高光反光条 */
+  content: '';
+  position: absolute;
+  top: -20%; left: 30%;
+  width: 22%; height: 140%;
+  background: rgba(255,255,255,0.55);
+  transform: rotate(20deg);
+}
+.room-mirror::after {
+  /* 顶部挂钩 */
+  content: '';
+  position: absolute;
+  top: -14%; left: 50%;
+  width: 14%; height: 14%;
+  transform: translateX(-50%);
+  border: 3px solid var(--wood);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+  background: transparent;
+}
+.room-basket {
+  /* 这其实是个复古双铃闹钟（一直被我认错成置物篮）——挪回收纳盒台面上，
+     跟镜子并排放，删掉了之前那个圆钟素材，这个才是真正要放这里的东西 */
+  position: absolute;
+  left: 24%; width: 5%; height: 7%; bottom: 44%;
+  background-image: url('../assets/room/sprites/basket.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.35)) brightness(1.05);
+}
+.room-floor-lamp {
+  position: absolute;
+  left: 85%; top: 72%; width: 6%; height: 26%;
+  background-image: url('../assets/room/sprites/floor_lamp.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.25));
+}
+
+.lamp-glow {
+  position: absolute;
+  left: 79%; top: 38%; width: 21%; height: 26%;
+  background: radial-gradient(circle, rgba(255,210,122,0.55) 0%, rgba(255,210,122,0.18) 45%, transparent 72%);
+  pointer-events: none;
+  animation: glow-pulse 3.2s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+.hotspot {
+  /* 早期占位美术阶段留下的调试框，真的家具素材上来之后一直没摘掉——
+     现在有真实贴图了，这一圈虚线框纯属多余，去掉 */
+  position: absolute;
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
+  color: var(--paper);
+  transition: transform 0.12s ease;
+  z-index: 3;
+}
+.hotspot:hover,
+.hotspot:focus-visible {
+  transform: translateY(-3px);
+  outline: none;
+}
+.hotspot:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.hotspot-icon { font-size: clamp(1.1rem, 3vw, 2rem); line-height: 1; }
+
+.hotspot.has-image {
+  background: none;
+  border: none;
+  /* 图片和文字标签各自用绝对定位钉在底边，不再用 flex 排版——
+     这样图片的落地线只取决于热点框自己的高度，不会因为标签文字长短
+     （比如"书架"两个字 vs "收纳盒"三个字撑开的行高）而跑偏 */
+  display: block;
+}
+.hotspot.has-image:hover,
+.hotspot.has-image:focus-visible {
+  background: none;
+}
+.hotspot.has-image .hotspot-image {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+.hotspot.has-image .hotspot-label {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.hotspot-image {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  /* 素材本身的宽高比经常跟热点框对不上，contain 默认居中会在上下留白，
+     导致图片视觉上"浮"在热点框中间而不是落在框底——钉在底部对齐才对 */
+  object-position: center bottom;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 3px 0 rgba(0,0,0,0.3));
+  transition: transform 0.12s ease;
+}
+/* 床正上方一整块软木板：接委托实拍照 + 信箱，像真的钉在木板上一样。
+   之前宽高用了相同的百分比，但房间是 16:9，同样的 % 在实际像素上宽比高多出快一倍，
+   板子看着又扁又大——按房间比例换算过再缩小一圈 */
+.room-corkboard {
+  left: 29%; top: 8%; width: 20%; height: 28%;
+  background:
+    radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1.5px) 0 0/10px 10px,
+    linear-gradient(135deg, #c9a26a 0%, #b58c52 100%);
+  border: 4px solid var(--wood);
+  outline: 2px solid var(--border);
+  border-radius: 3px;
+  filter: drop-shadow(-2px 3px 0 rgba(0,0,0,0.3));
+}
+/* 板子上顺手贴的几张便签/贴纸，纯装饰，填一填空白 */
+.room-corkboard .sticky-note {
+  position: absolute;
+  width: 22%;
+  height: 20%;
+  background: var(--lamp);
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+}
+.room-corkboard .sticky-note::before,
+.room-corkboard .sticky-note::after {
+  content: '';
+  position: absolute;
+  left: 15%; right: 15%;
+  height: 2px;
+  background: rgba(0,0,0,0.2);
+}
+.room-corkboard .sticky-note::before { top: 40%; }
+.room-corkboard .sticky-note::after { top: 60%; }
+.room-corkboard .sticky-note.n1 { left: 6%; bottom: 8%; transform: rotate(-8deg); }
+.room-corkboard .sticky-note.n2 { right: 6%; bottom: 10%; transform: rotate(6deg); background: var(--accent-2); }
+.room-corkboard .washi-tape {
+  position: absolute;
+  width: 16%;
+  height: 7%;
+  background: rgba(124, 214, 196, 0.75);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* 钉在软木板上的照片/信箱：统一小木框 + 一颗图钉 */
+.hotspot.is-framed .hotspot-image {
+  border: 3px solid var(--wood);
+  outline: 2px solid var(--border);
+  background: var(--paper);
+  padding: 3px;
+  box-sizing: border-box;
+}
+/* 信箱本身没有图片素材，用 emoji 图标顶替，框子直接套在热点框自己身上 */
+.hotspot.is-framed:not(.has-image) {
+  background: var(--paper);
+  border: 3px solid var(--wood);
+  outline: 2px solid var(--border);
+  border-radius: 3px;
+}
+.hotspot.is-framed::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.hotspot.has-image:hover .hotspot-image,
+.hotspot.has-image:focus-visible .hotspot-image {
+  /* 必须带上 translateX(-50%)，否则会整个覆盖掉基础状态的居中位移，
+     悬停时图片就会"跳"到不居中的位置（这正是之前"鼠标一放上去家具就往左偏"的原因） */
+  transform: translateX(-50%) translateY(-3px) scale(1.04);
+}
+
+.hotspot.has-sprite {
+  background: none;
+  border: none;
+  justify-content: flex-end;
+}
+.hotspot.has-sprite:hover,
+.hotspot.has-sprite:focus-visible {
+  background: none;
+  transform: none;
+}
+.character-sprite {
+  width: auto;
+  height: 92%;
+  image-rendering: pixelated;
+  animation: sprite-idle 2.6s ease-in-out infinite;
+  filter: drop-shadow(-2px 3px 0 rgba(0,0,0,0.35));
+}
+.hotspot.has-sprite:hover .character-sprite,
+.hotspot.has-sprite:focus-visible .character-sprite {
+  animation-duration: 0.7s;
+}
+@keyframes sprite-idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.hotspot-label {
+  font-family: var(--font-pixel);
+  font-size: clamp(0.55rem, 1.1vw, 0.8rem);
+  text-shadow: 1px 1px 0 var(--border);
+  white-space: nowrap;
+  /* 家具名字只留角色自己的，其余靠 hover 描边 + 光标提示就够了，文字太多显得杂 */
+  display: none;
+}
+.hotspot.has-sprite .hotspot-label {
+  display: block;
+}
+
+.hotspot.is-hinting {
+  animation: bob 1.2s ease-in-out infinite;
+}
+
+/* 点过的家具打个小对勾，给"探索进度"一个视觉反馈——比之前的感叹号克制很多，
+   不闪不弹，静静待在角落 */
+.hotspot.is-visited::after {
+  content: '✓';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 15px;
+  height: 15px;
+  background: var(--accent-2);
+  color: var(--border);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  font-size: 0.6rem;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.item-bar {
+  display: none;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 16px 22px;
+  -webkit-overflow-scrolling: touch;
+  background: linear-gradient(180deg, #5e3e22 0%, #4a3018 100%);
+  border-top: 3px solid var(--border);
+  border-bottom: 3px solid var(--border);
+}
+.item-bar-btn {
+  /* 物品栏格子：深色凹陷底，跟内容面板里的 metric-tile 一个语言 */
+  flex: 0 0 auto;
+  position: relative;
+  background: #efe6d2;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.5), inset 0 3px 6px rgba(0,0,0,0.18);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 64px;
+  margin-top: 4px;
+}
+.item-bar-btn::before,
+.item-bar-btn::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  background: #4a3018;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+}
+.item-bar-btn::before { top: -4px; left: -4px; }
+.item-bar-btn::after { bottom: -4px; right: -4px; }
+.item-bar-icon { font-size: 1.4rem; }
+.item-bar-label { font-family: var(--font-pixel); font-size: 0.6rem; white-space: nowrap; color: var(--ink); }
+.item-bar-btn:active { transform: translateY(2px); box-shadow: inset 0 0 0 2px rgba(255,255,255,0.5), inset 0 1px 3px rgba(0,0,0,0.18); }
+.item-bar-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 700px) {
+  .item-bar { display: flex; }
+  .item-bar[hidden] { display: none; }
+  .hotspot-label { display: none; }
+}
+
+body.panel-open .room-frame,
+body.panel-open .item-bar {
+  filter: brightness(0.85);
+}
