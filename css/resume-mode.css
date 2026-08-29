@@ -24,7 +24,7 @@
 .resume-section h3 { font-size: 0.95rem; color: var(--ink); margin: 14px 0 8px; }
 
 @media print {
-  .hud, .room-frame, .item-bar, #modeToggle { display: none !important; }
+  .hud, .room-frame, .curio-shelf, .item-bar, #modeToggle { display: none !important; }
   .resume-mode { display: block !important; box-shadow: none; }
   body { background: #fff; }
 }

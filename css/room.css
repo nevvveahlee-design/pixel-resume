@@ -720,6 +720,7 @@
 }
 
 body.panel-open .room-frame,
+body.panel-open .curio-shelf,
 body.panel-open .item-bar {
   filter: brightness(0.85);
 }

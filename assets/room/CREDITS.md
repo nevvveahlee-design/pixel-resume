@@ -35,6 +35,7 @@
 - License：允许商用/非商用（游戏、视频、图片），禁止转卖，署名非必须但作者希望能标注。
 - 用在本项目的文件：
   - `sprites/monitor.png`、`sprites/laptop.png` —— 取自 `electronics1.png`，未改色，用于"显示器"/"笔记本"热点（替换了之前用 bitglow 客厅包里电视图标的版本）
+  - `sprites/curio_headphones.png`、`sprites/curio_gamepad.png`、`sprites/curio_camera.png`、`sprites/curio_radio.png` —— 同样取自 `electronics1.png`（耳机、手柄、拍立得相机、收音机），未改色，用于房间下方"桌角好物"彩蛋区，跟简历板块无关，纯装饰
 
 ## Pixel Interior 客厅包补充
 - `sprites/rug_big.png` —— 取自 `livingroom_LRK.png`，比之前卧室包里那张更大的圆点纹地毯，未改色

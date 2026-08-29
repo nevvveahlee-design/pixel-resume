@@ -1,0 +1,183 @@
+/* 桌角好物货架：房间下面新加的一块纯装饰区域，跟简历数据无关。
+   大屏幕下房间被限死在 1400px 宽，房间外一整圈全是空的深色背景，
+   加这块东西不是为了塞更多经历，是让页面在大屏幕下别显得那么单薄。 */
+.curio-shelf {
+  max-width: 1400px;
+  margin: 14px auto 0;
+  padding: 0 16px 32px;
+}
+
+.curio-shelf-inner {
+  position: relative;
+  background: linear-gradient(180deg, #6b4527 0%, #52341c 100%);
+  border: 4px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.3);
+  padding: 16px 22px 24px;
+}
+
+.curio-shelf-title {
+  font-family: var(--font-pixel);
+  font-weight: bold;
+  font-size: clamp(0.75rem, 1vw, 0.95rem);
+  color: var(--lamp);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.curio-shelf-hint {
+  font-family: var(--font-body);
+  font-weight: normal;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.curio-shelf-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 34px);
+}
+
+.curio-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  transition: transform 0.15s ease;
+}
+.curio-item:hover,
+.curio-item:focus-visible {
+  transform: translateY(-4px);
+}
+
+.curio-icon {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 3px 2px rgba(0,0,0,0.35));
+}
+.curio-icon-sprite {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+
+.curio-label {
+  font-family: var(--font-pixel);
+  font-size: 0.62rem;
+  color: var(--paper);
+}
+
+/* 马克杯：CSS 直接画，跟房间里那面镜子是同一套手法（免得为了 4 个小物件再去找新素材包） */
+.curio-icon-mug::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 10px; width: 22px; height: 24px;
+  background: linear-gradient(160deg, #fff6ea 0%, #e8d3b0 100%);
+  border: 2px solid var(--border);
+  border-radius: 0 0 6px 6px;
+}
+.curio-icon-mug::after {
+  content: '';
+  position: absolute;
+  right: 3px; top: 16px; width: 10px; height: 12px;
+  border: 2px solid var(--border);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+}
+
+/* 闲书：两本颜色不同、角度相反的书叠一起 */
+.curio-icon-books::before,
+.curio-icon-books::after {
+  content: '';
+  position: absolute;
+  left: 6px; width: 32px; height: 9px;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+}
+.curio-icon-books::before { top: 13px; background: var(--accent); transform: rotate(-4deg); }
+.curio-icon-books::after { top: 23px; background: var(--accent-2); transform: rotate(3deg); }
+
+/* 多肉：几团圆点堆成叶簇 + 一个梯形花盆 */
+.curio-icon-succulent::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 4px; width: 28px; height: 20px;
+  background:
+    radial-gradient(circle at 30% 45%, var(--leaf) 0 6px, transparent 7px),
+    radial-gradient(circle at 68% 32%, var(--leaf-dark) 0 5px, transparent 6px),
+    radial-gradient(circle at 52% 62%, var(--leaf) 0 7px, transparent 8px);
+}
+.curio-icon-succulent::after {
+  content: '';
+  position: absolute;
+  left: 12px; top: 24px; width: 20px; height: 14px;
+  background: var(--pot);
+  border: 2px solid var(--border);
+  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+}
+
+/* 便利贴：两张颜色不同、角度相反的正方形贴纸叠一起 */
+.curio-icon-notes::before,
+.curio-icon-notes::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+}
+.curio-icon-notes::before { left: 6px; top: 9px; background: #ffe08a; transform: rotate(-6deg); }
+.curio-icon-notes::after { left: 17px; top: 13px; background: #8fd6c4; transform: rotate(5deg); }
+
+/* 点开小物件弹出的俏皮话气泡，跟 npc-bubble 是同一套视觉语言但更轻量 */
+.curio-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 190px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.3);
+  z-index: 5;
+  pointer-events: none;
+  animation: curio-pop 0.15s ease;
+}
+.curio-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--border);
+}
+@keyframes curio-pop {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .curio-tooltip { animation: none; }
+}
+
+@media (max-width: 700px) {
+  .curio-shelf-items { gap: 12px; }
+  .curio-icon { width: 38px; height: 38px; }
+}

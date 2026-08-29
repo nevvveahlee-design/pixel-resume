@@ -54,6 +54,7 @@
   function initModeToggle() {
     var btn = document.getElementById('modeToggle');
     var roomFrame = document.querySelector('.room-frame');
+    var curioShelf = document.querySelector('.curio-shelf');
     var itemBar = document.getElementById('itemBar');
     var resumeMode = document.getElementById('resumeMode');
 
@@ -61,6 +62,8 @@
       var showingResume = !resumeMode.hidden;
       resumeMode.hidden = showingResume;
       roomFrame.hidden = !showingResume;
+      // 桌角好物纯装饰，跟简历彩蛋一样不属于简历模式，切过去时一起藏起来
+      curioShelf.hidden = !showingResume;
       itemBar.hidden = !showingResume;
       btn.textContent = showingResume ? '📄 简历模式' : '🏠 房间模式';
       btn.setAttribute('aria-pressed', showingResume ? 'false' : 'true');
@@ -110,6 +113,7 @@
     renderHud();
     PixelResume.panel.init();
     PixelResume.room.init();
+    PixelResume.curios.init();
     renderResumeMode();
     initModeToggle();
     initSoundToggle();
