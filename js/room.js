@@ -150,6 +150,11 @@
     });
     room.appendChild(win);
 
+    // 墙地交界踢脚线阴影，要在地毯/家具之前铺好，不然会盖在家具上面显得脏
+    var baseboardShadow = document.createElement('div');
+    baseboardShadow.className = 'room-deco room-baseboard-shadow';
+    room.appendChild(baseboardShadow);
+
     var rug = document.createElement('div');
     rug.className = 'room-deco room-rug';
     room.appendChild(rug);
@@ -199,10 +204,6 @@
     alarmClock.className = 'room-deco room-basket';
     room.appendChild(alarmClock);
 
-    var floorLamp = document.createElement('div');
-    floorLamp.className = 'room-deco room-floor-lamp';
-    room.appendChild(floorLamp);
-
     var bed = document.createElement('div');
     bed.className = 'room-deco room-bed';
     room.appendChild(bed);
@@ -210,6 +211,12 @@
     var desk = document.createElement('div');
     desk.className = 'room-deco room-desk';
     room.appendChild(desk);
+
+    // 落地灯站在书桌旁边、离视角更近，DOM 顺序放书桌后面，
+    // 两者的框在书桌变大之后有一点重叠，要保证灯永远画在书桌上层，不被盖住
+    var floorLamp = document.createElement('div');
+    floorLamp.className = 'room-deco room-floor-lamp';
+    room.appendChild(floorLamp);
 
     var glow = document.createElement('div');
     glow.className = 'room-deco lamp-glow';

@@ -22,7 +22,7 @@ window.RESUME_DATA = {
   sections: [
     {
       id: 'career',
-      prop: { label: '显示器', icon: '🖥️', image: 'assets/room/sprites/monitor.png', rect: [82, 49, 6, 11] },
+      prop: { label: '显示器', icon: '🖥️', image: 'assets/room/sprites/monitor.png', rect: [79, 48, 7, 16] },
       title: '职业经历',
       tabs: [
         {
@@ -130,7 +130,7 @@ window.RESUME_DATA = {
 
     {
       id: 'ai-project',
-      prop: { label: '笔记本', icon: '💻', image: 'assets/room/sprites/laptop.png', rect: [89, 53, 5, 7] },
+      prop: { label: '笔记本', icon: '💻', image: 'assets/room/sprites/laptop.png', rect: [87, 54, 6, 10] },
       title: 'AI 战略分析溯源助手',
       tabs: [{
         label: 'Vibe-Coding & 产品设计',
