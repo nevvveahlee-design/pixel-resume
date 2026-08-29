@@ -255,6 +255,14 @@
   background: var(--wood); border: 3px solid var(--border); border-radius: 2px;
 }
 
+.room-window-light {
+  position: absolute;
+  left: 32%; top: 38%; width: 48%; height: 48%;
+  background: linear-gradient(120deg, rgba(255,238,190,0.4) 0%, rgba(255,224,160,0.14) 45%, transparent 72%);
+  clip-path: polygon(68% 0%, 100% 0%, 58% 100%, 8% 100%);
+  mix-blend-mode: soft-light;
+}
+
 .room-rug {
   position: absolute;
   left: 30%; top: 66%; width: 34%; height: 32%;
@@ -489,6 +497,28 @@
   height: 7%;
   background: rgba(124, 214, 196, 0.75);
   border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* 软木板和窗户之间那段墙的填空：一个圆钟 */
+.room-wall-clock {
+  left: 55%; top: 12%; width: 5%; height: 9%;
+  background-image: url('../assets/room/sprites/clock.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.25));
+}
+
+/* 衣柜和书桌之间那块地板的填空：一盆小绿植 */
+.room-plant2 {
+  left: 71%; top: 61%; width: 4%; height: 11%;
+  background-image: url('../assets/room/sprites/plant2.png');
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(-2px 2px 0 rgba(0,0,0,0.25));
 }
 
 /* 钉在软木板上的照片/信箱：统一小木框 + 一颗图钉 */

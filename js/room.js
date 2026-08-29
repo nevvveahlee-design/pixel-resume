@@ -154,6 +154,12 @@
     rug.className = 'room-deco room-rug';
     room.appendChild(rug);
 
+    // 窗户投下来的一道暖光，斜着洒在地板上——让房间看着是"被设计过打光的"，
+    // 不是家具沿墙摆一圈的平光效果
+    var windowLight = document.createElement('div');
+    windowLight.className = 'room-deco room-window-light';
+    room.appendChild(windowLight);
+
     var wallart = document.createElement('div');
     wallart.className = 'room-deco room-wallart';
     room.appendChild(wallart);
@@ -168,6 +174,16 @@
       corkboard.appendChild(note);
     });
     room.appendChild(corkboard);
+
+    // 软木板和窗户之间那段墙太空了，补一个圆钟（之前裁好但没用上的素材）
+    var wallClock = document.createElement('div');
+    wallClock.className = 'room-deco room-wall-clock';
+    room.appendChild(wallClock);
+
+    // 衣柜和书桌中间那块地板也太空，补一盆小绿植
+    var plant2 = document.createElement('div');
+    plant2.className = 'room-deco room-plant2';
+    room.appendChild(plant2);
 
     var mirror = document.createElement('div');
     mirror.className = 'room-deco room-mirror';

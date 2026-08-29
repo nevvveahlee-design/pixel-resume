@@ -42,8 +42,9 @@
 
 ## Pixel Interior 客厅包再补充（生活小物）
 - `sprites/floor_lamp.png` —— 取自 `decorations_LRK.png`，未改色，放在书桌旁。
-- `sprites/clock.png` —— 取自 `decorations_LRK.png`，圆钟，最终没有采用（跟"双铃闹钟"重复了，房间里只留一个钟），文件还留着没删。
+- `sprites/clock.png` —— 取自 `decorations_LRK.png`，圆钟，一开始因为跟"双铃闹钟"重复没用上；房间加大之后软木板和窗户之间空出一段墙，重新捡回来用了，未改色。
 - `sprites/mirror.png` —— 取自 `decorations_LRK.png`，最终没有采用（换成了 CSS 画的椭圆镜子），文件还留着没删。
+- `sprites/plant2.png` —— 取自 `livingroom_LRK.png` 里的 `plant2.png`，跟已有的那盆绿植不同姿态，未改色，填衣柜和书桌之间的地板空隙。
 
 ## Pixel Interior 客厅包再补充（书架换新）
 - `sprites/bookshelf.png` —— 取自 `cabinets_LRK.png`，换成细节更丰富、书脊颜色更多样的一款（原来那款太素）。**代码重新上色**：书架框架/隔板部分调成跟床/衣柜/收纳盒同一家族的暖黄色调，书脊本身饱和度较高的颜色保留不动，所以书还是五颜六色的，只有木框变了色。
