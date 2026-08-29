@@ -5,7 +5,6 @@
   function renderHud() {
     var meta = window.RESUME_DATA.meta;
     document.getElementById('hudName').textContent = meta.name;
-    document.getElementById('hudNameEn').textContent = meta.nameEn;
     document.getElementById('hudTagline').textContent = meta.tagline;
   }
 
