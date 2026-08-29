@@ -35,11 +35,18 @@ a { color: inherit; }
   --font-body: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
+/* 房间和下面的桌角好物都封顶在 1400px 宽，宽屏下两侧会空出大片纯黑——
+   不想靠拉宽房间本身来填（那样细节会更粗糙，之前也踩过变宽导致要滚动的坑），
+   改成让页面背景本身"发光"：从内容区往两侧自然晕开暖色，两侧读成"房间漏出来的光"
+   而不是"没做完的空白"。第二层光斑对齐桌角好物的位置（页面下半段），
+   不然光晕只笼罩顶部，滚到下面又变回死黑。 */
 body {
   font-family: var(--font-body);
   color: var(--ink);
   background:
     repeating-linear-gradient(135deg, rgba(0,0,0,0.05) 0 3px, transparent 3px 7px),
+    radial-gradient(ellipse 1500px 900px at 50% 6%, rgba(74,52,32,0.9) 0%, rgba(44,30,18,0.55) 45%, transparent 100%),
+    radial-gradient(ellipse 1300px 700px at 50% 78%, rgba(74,52,32,0.7) 0%, rgba(44,30,18,0.4) 45%, transparent 100%),
     radial-gradient(ellipse 900px 600px at 50% 0%, #4a3420 0%, #2c1e12 55%, #1a1108 100%);
   min-height: 100vh;
   cursor: url('../assets/cursor/arrow.svg') 4 4, auto;
