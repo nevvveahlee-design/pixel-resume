@@ -81,7 +81,7 @@ button,
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 14px 18px;
   flex-wrap: wrap;
@@ -95,10 +95,16 @@ button,
   border-radius: 3px;
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
   box-shadow: var(--shadow);
-  padding: clamp(12px, 1vw, 18px) clamp(20px, 1.8vw, 30px);
+  padding: 10px clamp(20px, 1.8vw, 30px);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+}
+.hud-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .hud-name-plate::before {
   /* 四角铆钉，跟内容面板的装饰呼应 */
@@ -112,12 +118,11 @@ button,
     radial-gradient(circle, #e8c98f 2px, transparent 2.2px) bottom 1px left 1px / 10px 10px no-repeat,
     radial-gradient(circle, #e8c98f 2px, transparent 2.2px) bottom 1px right 1px / 10px 10px no-repeat;
 }
-.hud-name { font-family: var(--font-pixel); font-weight: bold; font-size: clamp(1.2rem, 1.6vw, 1.7rem); color: var(--paper); text-shadow: 1px 1px 0 rgba(0,0,0,0.3); }
-.hud-name-en { font-size: clamp(0.75rem, 0.9vw, 0.95rem); color: #e8d4b8; }
-.hud-tagline { font-size: clamp(0.8rem, 1vw, 1.05rem); color: #f0e4cf; margin-top: 4px; }
+.hud-name { font-family: var(--font-pixel); font-weight: bold; font-size: clamp(1.1rem, 1.4vw, 1.4rem); color: var(--paper); text-shadow: 1px 1px 0 rgba(0,0,0,0.3); }
+.hud-name-en { font-size: clamp(0.75rem, 0.85vw, 0.85rem); color: #e8d4b8; }
+.hud-tagline { font-size: clamp(0.78rem, 0.9vw, 0.9rem); color: #f0e4cf; }
 .hud-progress {
   display: inline-block;
-  margin-top: 6px;
   font-family: var(--font-pixel);
   font-size: clamp(0.7rem, 0.85vw, 0.85rem);
   color: var(--accent-2);

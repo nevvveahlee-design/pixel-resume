@@ -1,6 +1,6 @@
 /* 房间场景（占位美术版）+ 热点道具 + 移动端底部图标栏 */
 .room-frame {
-  width: min(100vw, 1600px);
+  width: min(100vw, 1400px);
   margin: 0 auto;
   padding: 0 16px 24px;
 }
