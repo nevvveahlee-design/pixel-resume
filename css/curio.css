@@ -73,6 +73,31 @@
   image-rendering: pixelated;
 }
 
+/* 耳机/手柄现在真的控制音效/音乐开关，关掉的时候图标压暗 + 加一道斜杠，
+   跟顶部 HUD 按钮上的 🔇 是同一个意思，一眼能看出"这个是关着的" */
+.curio-icon.is-off { opacity: 0.4; }
+.curio-icon.is-off::after {
+  content: '';
+  position: absolute;
+  left: 4px; right: 4px; top: 50%;
+  height: 2px;
+  background: #d94f4f;
+  transform: rotate(-32deg);
+  border-radius: 1px;
+}
+
+/* 多肉浇水一下，小小地弹一下，纯反馈动画 */
+.curio-icon.is-bouncing { animation: curio-bounce 0.4s ease; }
+@keyframes curio-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.22) rotate(-4deg); }
+  65% { transform: scale(0.94) rotate(3deg); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .curio-icon.is-bouncing { animation: none; }
+}
+
 .curio-label {
   font-family: var(--font-pixel);
   font-size: 0.62rem;
@@ -180,4 +205,79 @@
 @media (max-width: 700px) {
   .curio-shelf-items { gap: 12px; }
   .curio-icon { width: 38px; height: 38px; }
+}
+
+/* 拍立得点开的相册弹层，跟简历内容板块（.overlay/.panel）是分开的两套 DOM，
+   故意不复用那套，因为那套是给带 tab 的经历板块用的，这里只是个照片格子 */
+.curio-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 30, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 200;
+}
+
+.curio-lightbox {
+  position: relative;
+  background: var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(139,111,71,0.05) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(90deg, rgba(139,111,71,0.05) 0 2px, transparent 2px 4px);
+  border: 4px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 0 0 3px var(--wood), 0 0 0 6px var(--border), 0 10px 0 rgba(0,0,0,0.35);
+  width: min(720px, 100%);
+  max-height: min(84vh, 640px);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.curio-lightbox-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 30px; height: 30px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--paper);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.curio-lightbox-title {
+  font-family: var(--font-pixel);
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-right: 30px;
+}
+
+.curio-lightbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.curio-lightbox-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 3px solid var(--border);
+  border-radius: 3px;
+  background: #ddd;
+}
+/* 接委托那组没有真实打码，靠像素化 canvas 挡脸，容器本身不是 <img>，
+   内部塞进来的 canvas 手动撑满 */
+.curio-lightbox-tile {
+  overflow: hidden;
+  padding: 0;
+}
+.curio-lightbox-tile canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
 }

@@ -70,6 +70,9 @@
     });
   }
 
+  // 音效/音乐开关现在有两处入口：这里的 HUD 按钮，和桌角好物里的耳机/手柄。
+  // 两边都只负责"切状态 + 广播一个事件"，谁改的都行，两边收到事件各自照实际状态重绘，
+  // 不用互相知道对方的存在。
   function initSoundToggle() {
     var btn = document.getElementById('soundToggle');
     function render() {
@@ -79,8 +82,9 @@
     }
     btn.addEventListener('click', function () {
       PixelResume.sound.setMuted(!PixelResume.sound.isMuted());
-      render();
+      document.dispatchEvent(new Event('pixelresume:audio-change'));
     });
+    document.addEventListener('pixelresume:audio-change', render);
     render();
   }
 
@@ -93,8 +97,9 @@
     }
     btn.addEventListener('click', function () {
       PixelResume.bgm.toggle();
-      render();
+      document.dispatchEvent(new Event('pixelresume:audio-change'));
     });
+    document.addEventListener('pixelresume:audio-change', render);
     render();
   }
 
