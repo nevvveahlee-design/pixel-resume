@@ -30,12 +30,12 @@
   }
 
   var CURIOS = [
-    { id: 'headphones', icon: 'sprite', src: 'assets/room/sprites/curio_headphones.png', label: '耳机', type: 'sound' },
-    { id: 'gamepad', icon: 'sprite', src: 'assets/room/sprites/curio_gamepad.png', label: '手柄', type: 'bgm' },
+    { id: 'headphones', icon: 'sprite', src: 'assets/room/sprites/curio_headphones.png', label: '耳机', type: 'bgm' },
+    { id: 'gamepad', icon: 'sprite', src: 'assets/room/sprites/curio_gamepad.png', label: '手柄', type: 'sound' },
     { id: 'camera', icon: 'sprite', src: 'assets/room/sprites/curio_camera.png', label: '拍立得', type: 'photos' },
+    { id: 'resume', icon: 'books', label: '简历', type: 'resume-mode' },
     { id: 'radio', icon: 'sprite', src: 'assets/room/sprites/curio_radio.png', label: '收音机', type: 'cycle', lines: RADIO_LINES },
     { id: 'mug', icon: 'mug', label: '马克杯', type: 'counter', text: mugText },
-    { id: 'resume', icon: 'books', label: '简历', type: 'resume-mode' },
     { id: 'succulent', icon: 'succulent', label: '多肉', type: 'counter', text: succulentText, bounce: true },
     { id: 'notes', icon: 'notes', label: '便利贴', type: 'cycle', lines: NOTE_LINES }
   ];
@@ -61,29 +61,28 @@
     autoCloseTimer = window.setTimeout(closeTooltip, 3200);
   }
 
-  // 耳机/手柄：直接调音效/音乐已有的开关逻辑，跟顶部 HUD 是同一个状态，
-  // 改完广播一个事件，两边（HUD 按钮、这两个图标本身）都监听着同步一下显示
+  // 耳机管音乐、手柄管音效——跟顶部 HUD 曾经的两个按钮是同一套底层状态，
+  // 改完广播一个事件，两个图标自己（还有以后万一有别的地方要读状态）都监听着同步一下显示
   function renderAudioIcons() {
     var headphones = document.querySelector('.curio-item[data-id="headphones"] .curio-icon');
     var gamepad = document.querySelector('.curio-item[data-id="gamepad"] .curio-icon');
-    if (headphones) headphones.classList.toggle('is-off', PixelResume.sound.isMuted());
-    if (gamepad) gamepad.classList.toggle('is-off', !PixelResume.bgm.isWanted());
+    if (headphones) headphones.classList.toggle('is-off', !PixelResume.bgm.isWanted());
+    if (gamepad) gamepad.classList.toggle('is-off', PixelResume.sound.isMuted());
   }
 
-  function handleSound(btn) {
-    PixelResume.sound.setMuted(!PixelResume.sound.isMuted());
-    document.dispatchEvent(new Event('pixelresume:audio-change'));
-    showTooltip(btn, PixelResume.sound.isMuted() ? '戴上耳机，把音效关掉了' : '摘下耳机，音效又开着了');
-  }
   function handleBgm(btn) {
     PixelResume.bgm.toggle();
     document.dispatchEvent(new Event('pixelresume:audio-change'));
-    showTooltip(btn, PixelResume.bgm.isWanted() ? '按下播放，音乐放起来' : '按了暂停，先安静一下');
+    showTooltip(btn, PixelResume.bgm.isWanted() ? '戴上耳机，音乐放起来' : '摘下耳机，先安静一下');
+  }
+  function handleSound(btn) {
+    PixelResume.sound.setMuted(!PixelResume.sound.isMuted());
+    document.dispatchEvent(new Event('pixelresume:audio-change'));
+    showTooltip(btn, PixelResume.sound.isMuted() ? '按下手柄，把音效关掉了' : '按下手柄，音效又开着了');
   }
 
   // 拍立得：去读 photocards / cosplay(第二个 tab) 已有的相册文件名，
-  // 直接显示原始 jpg/jfif——文件本身在处理照片时就做过隐私模糊，
-  // 这里只是跳过展示时额外叠加的那层像素化滤镜，不是把模糊也去掉
+  // 模糊/像素化的处理细节见下面 openLightbox 里的注释
   function findGalleryFiles(sectionId, tabIndex) {
     var sections = (window.RESUME_DATA && window.RESUME_DATA.sections) || [];
     var section = sections.filter(function (s) { return s.id === sectionId; })[0];
