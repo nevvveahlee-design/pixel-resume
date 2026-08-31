@@ -51,56 +51,29 @@
     });
   }
 
-  function initModeToggle() {
-    var btn = document.getElementById('modeToggle');
+  // 简历模式的开关按钮搬进桌角好物里了（原来的"闲书"，现在叫"简历"），
+  // 房间和桌角好物现在是合并在一起的同一个板块，所以进简历模式时只需要
+  // 藏 .room-frame 这一个容器；退出的入口是下面这个常驻的"回到房间"按钮
+  // ——它必须在简历模式下也能点到，不能塞进跟着房间一起被隐藏的地方。
+  function initResumeMode() {
     var roomFrame = document.querySelector('.room-frame');
-    var curioShelf = document.querySelector('.curio-shelf');
     var itemBar = document.getElementById('itemBar');
     var resumeMode = document.getElementById('resumeMode');
+    var backBtn = document.getElementById('backToRoom');
 
-    btn.addEventListener('click', function () {
-      var showingResume = !resumeMode.hidden;
-      resumeMode.hidden = showingResume;
-      roomFrame.hidden = !showingResume;
-      // 桌角好物纯装饰，跟简历彩蛋一样不属于简历模式，切过去时一起藏起来
-      curioShelf.hidden = !showingResume;
-      itemBar.hidden = !showingResume;
-      btn.textContent = showingResume ? '📄 简历模式' : '🏠 房间模式';
-      btn.setAttribute('aria-pressed', showingResume ? 'false' : 'true');
-    });
-  }
-
-  // 音效/音乐开关现在有两处入口：这里的 HUD 按钮，和桌角好物里的耳机/手柄。
-  // 两边都只负责"切状态 + 广播一个事件"，谁改的都行，两边收到事件各自照实际状态重绘，
-  // 不用互相知道对方的存在。
-  function initSoundToggle() {
-    var btn = document.getElementById('soundToggle');
-    function render() {
-      var muted = PixelResume.sound.isMuted();
-      btn.textContent = muted ? '🔇 音效' : '🔊 音效';
-      btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    function setResumeMode(showResume) {
+      resumeMode.hidden = !showResume;
+      roomFrame.hidden = showResume;
+      itemBar.hidden = showResume;
+      backBtn.hidden = !showResume;
     }
-    btn.addEventListener('click', function () {
-      PixelResume.sound.setMuted(!PixelResume.sound.isMuted());
-      document.dispatchEvent(new Event('pixelresume:audio-change'));
-    });
-    document.addEventListener('pixelresume:audio-change', render);
-    render();
-  }
 
-  function initBgmToggle() {
-    var btn = document.getElementById('bgmToggle');
-    function render() {
-      var on = PixelResume.bgm.isWanted();
-      btn.textContent = on ? '🎵 音乐' : '🔇 音乐';
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    }
-    btn.addEventListener('click', function () {
-      PixelResume.bgm.toggle();
-      document.dispatchEvent(new Event('pixelresume:audio-change'));
-    });
-    document.addEventListener('pixelresume:audio-change', render);
-    render();
+    backBtn.addEventListener('click', function () { setResumeMode(false); });
+
+    PixelResume.resumeMode = {
+      toggle: function () { setResumeMode(resumeMode.hidden); },
+      isOn: function () { return !resumeMode.hidden; }
+    };
   }
 
   function openFromHash() {
@@ -120,9 +93,7 @@
     PixelResume.room.init();
     PixelResume.curios.init();
     renderResumeMode();
-    initModeToggle();
-    initSoundToggle();
-    initBgmToggle();
+    initResumeMode();
     PixelResume.bgm.armAutoResume();
     openFromHash();
   });

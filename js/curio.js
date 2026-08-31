@@ -1,6 +1,7 @@
-/* 桌角好物：纯装饰彩蛋，跟"已探索 X/8"的简历板块完全无关。
-   目的是填一填大屏幕下房间以外空出来的那一大截，不承载任何简历数据——
-   除了拍立得会去读 photocards / cosplay 板块已有的相册文件名，其它 7 个都是纯彩蛋。 */
+/* 桌角好物：8 个可点的小物件，嵌在房间同一个板块里，不是简历数据本身。
+   耳机/手柄/简历这 3 个是真开关（音效、音乐、简历模式，原来是 HUD 右上角的
+   三个按钮，现在挪到这里了），拍立得读 photocards / cosplay 板块已有的
+   相册文件名，剩下收音机/马克杯/多肉/便利贴纯彩蛋，点一下换句俏皮话。 */
 (function () {
   var PixelResume = (window.PixelResume = window.PixelResume || {});
 
@@ -9,12 +10,6 @@
     '换台，换台，找找有没有好听的',
     '刚好切到一首挺喜欢的',
     '信号不太好，但氛围到位'
-  ];
-  var BOOK_LINES = [
-    '书签停在第 34 页，停了两周了',
-    '买书如山倒，看书如抽丝',
-    '封面好看的书，购买欲 +100',
-    '翻了两页，眼皮开始打架'
   ];
   var NOTE_LINES = [
     '灵感这种东西，不记下来分分钟就没了',
@@ -40,7 +35,7 @@
     { id: 'camera', icon: 'sprite', src: 'assets/room/sprites/curio_camera.png', label: '拍立得', type: 'photos' },
     { id: 'radio', icon: 'sprite', src: 'assets/room/sprites/curio_radio.png', label: '收音机', type: 'cycle', lines: RADIO_LINES },
     { id: 'mug', icon: 'mug', label: '马克杯', type: 'counter', text: mugText },
-    { id: 'books', icon: 'books', label: '闲书', type: 'cycle', lines: BOOK_LINES },
+    { id: 'resume', icon: 'books', label: '简历', type: 'resume-mode' },
     { id: 'succulent', icon: 'succulent', label: '多肉', type: 'counter', text: succulentText, bounce: true },
     { id: 'notes', icon: 'notes', label: '便利贴', type: 'cycle', lines: NOTE_LINES }
   ];
@@ -101,13 +96,11 @@
   }
 
   function openLightbox() {
-    // 小卡照片在处理阶段就做过真实的高斯模糊（文件本身糊的），跳过展示时
-    // 额外叠加的像素化滤镜没问题。接委托那 3 张原始 jfif 完全没打过码，
-    // 它们能在别处安全展示，靠的全部是这层像素化——这里绝对不能跳，
-    // 否则委托对象等第三方的脸会原样露出来。两组必须分开处理，不能一视同仁。
-    var clearFiles = findGalleryFiles('photocards', 0);
-    var pixelatedFiles = findGalleryFiles('cosplay', 1);
-    if (!clearFiles.length && !pixelatedFiles.length) return;
+    // 小卡照片在处理阶段就做过真实的高斯模糊（文件本身糊的）。接委托那 3 张
+    // 原始 jfif 本来没打过码、别处全靠像素化滤镜挡人脸——里面出现的委托对象/
+    // 合作者已经明确同意公开展示，2026-08-31 得到确认后这里改成一起显示原图。
+    var files = findGalleryFiles('photocards', 0).concat(findGalleryFiles('cosplay', 1));
+    if (!files.length) return;
 
     var overlay = document.createElement('div');
     overlay.className = 'curio-lightbox-overlay';
@@ -127,21 +120,12 @@
     var grid = document.createElement('div');
     grid.className = 'curio-lightbox-grid';
 
-    clearFiles.forEach(function (src) {
+    files.forEach(function (src) {
       var img = document.createElement('img');
       img.src = src;
       img.alt = '';
       img.className = 'curio-lightbox-img';
       grid.appendChild(img);
-    });
-    pixelatedFiles.forEach(function (src) {
-      var tile = document.createElement('div');
-      tile.className = 'curio-lightbox-img curio-lightbox-tile';
-      grid.appendChild(tile);
-      PixelResume.pixelate
-        .fromImage(src, { blockSize: 7, maxWidth: 320, aspect: 1, crop: 'cover' })
-        .then(function (canvas) { tile.appendChild(canvas); })
-        .catch(function () { /* file:// 下 canvas 被污染时静默放弃 */ });
     });
 
     box.appendChild(closeBtn);
@@ -196,6 +180,10 @@
       }
       if (curio.type === 'photos') {
         openLightbox();
+        return;
+      }
+      if (curio.type === 'resume-mode') {
+        PixelResume.resumeMode.toggle();
         return;
       }
       if (curio.type === 'cycle') {

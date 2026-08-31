@@ -1,43 +1,18 @@
-/* 桌角好物货架：房间下面新加的一块纯装饰区域，跟简历数据无关。
-   大屏幕下房间被限死在 1400px 宽，房间外一整圈全是空的深色背景，
-   加这块东西不是为了塞更多经历，是让页面在大屏幕下别显得那么单薄。 */
+/* 桌角好物：以前是房间下面单独一块带自己边框的板块，跟房间看着是"上下两块"。
+   现在挪进 .room-shell 里当一条紧凑的底部搁物架，共用外壳同一圈边框/圆角，
+   靠一条分隔线跟房间画布区分开，不再重复画边框/投影，物件也缩小了一档。 */
 .curio-shelf {
-  max-width: 1400px;
-  margin: 14px auto 0;
-  padding: 0 16px 32px;
-}
-
-.curio-shelf-inner {
-  position: relative;
   background: linear-gradient(180deg, #6b4527 0%, #52341c 100%);
-  border: 4px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 8px 0 rgba(0,0,0,0.3);
-  padding: 16px 22px 24px;
-}
-
-.curio-shelf-title {
-  font-family: var(--font-pixel);
-  font-weight: bold;
-  font-size: clamp(0.75rem, 1vw, 0.95rem);
-  color: var(--lamp);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-.curio-shelf-hint {
-  font-family: var(--font-body);
-  font-weight: normal;
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.5);
+  border-top: 3px solid var(--border);
+  padding: 8px 14px;
 }
 
 .curio-shelf-items {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: clamp(14px, 3vw, 34px);
+  align-items: flex-start;
+  gap: clamp(6px, 1.6vw, 18px);
 }
 
 .curio-item {
@@ -45,26 +20,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   background: none;
   border: none;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 4px 6px;
+  border-radius: 6px;
   transition: transform 0.15s ease;
 }
 .curio-item:hover,
 .curio-item:focus-visible {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
 }
 
 .curio-icon {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 3px 2px rgba(0,0,0,0.35));
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35));
 }
 .curio-icon-sprite {
   background-size: contain;
@@ -100,54 +75,57 @@
 
 .curio-label {
   font-family: var(--font-pixel);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   color: var(--paper);
 }
 
-/* 马克杯：CSS 直接画，跟房间里那面镜子是同一套手法（免得为了 4 个小物件再去找新素材包） */
+/* 马克杯：CSS 直接画，跟房间里那面镜子是同一套手法（免得为了 4 个小物件再去找新素材包）。
+   下面这几个手绘图标的坐标是按 44px 的图标框画的，图标压缩到 34px 之后
+   统一乘了约 0.77 的比例重新量过，不然会比旁边的贴图图标显得偏大。 */
 .curio-icon-mug::before {
   content: '';
   position: absolute;
-  left: 8px; top: 10px; width: 22px; height: 24px;
+  left: 6px; top: 8px; width: 17px; height: 18px;
   background: linear-gradient(160deg, #fff6ea 0%, #e8d3b0 100%);
   border: 2px solid var(--border);
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 5px 5px;
 }
 .curio-icon-mug::after {
   content: '';
   position: absolute;
-  right: 3px; top: 16px; width: 10px; height: 12px;
+  right: 2px; top: 12px; width: 8px; height: 9px;
   border: 2px solid var(--border);
   border-left: none;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 6px 6px 0;
 }
 
-/* 闲书：两本颜色不同、角度相反的书叠一起 */
+/* 简历：两本颜色不同、角度相反的书叠一起（图标沿用之前"闲书"那版画法，
+   现在代表的是简历模式开关，不是彩蛋了） */
 .curio-icon-books::before,
 .curio-icon-books::after {
   content: '';
   position: absolute;
-  left: 6px; width: 32px; height: 9px;
+  left: 5px; width: 25px; height: 7px;
   border: 2px solid var(--border);
   border-radius: 2px;
 }
-.curio-icon-books::before { top: 13px; background: var(--accent); transform: rotate(-4deg); }
-.curio-icon-books::after { top: 23px; background: var(--accent-2); transform: rotate(3deg); }
+.curio-icon-books::before { top: 10px; background: var(--accent); transform: rotate(-4deg); }
+.curio-icon-books::after { top: 18px; background: var(--accent-2); transform: rotate(3deg); }
 
 /* 多肉：几团圆点堆成叶簇 + 一个梯形花盆 */
 .curio-icon-succulent::before {
   content: '';
   position: absolute;
-  left: 8px; top: 4px; width: 28px; height: 20px;
+  left: 6px; top: 3px; width: 22px; height: 15px;
   background:
-    radial-gradient(circle at 30% 45%, var(--leaf) 0 6px, transparent 7px),
-    radial-gradient(circle at 68% 32%, var(--leaf-dark) 0 5px, transparent 6px),
-    radial-gradient(circle at 52% 62%, var(--leaf) 0 7px, transparent 8px);
+    radial-gradient(circle at 30% 45%, var(--leaf) 0 5px, transparent 6px),
+    radial-gradient(circle at 68% 32%, var(--leaf-dark) 0 4px, transparent 5px),
+    radial-gradient(circle at 52% 62%, var(--leaf) 0 5px, transparent 6px);
 }
 .curio-icon-succulent::after {
   content: '';
   position: absolute;
-  left: 12px; top: 24px; width: 20px; height: 14px;
+  left: 9px; top: 18px; width: 15px; height: 11px;
   background: var(--pot);
   border: 2px solid var(--border);
   clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
@@ -158,11 +136,11 @@
 .curio-icon-notes::after {
   content: '';
   position: absolute;
-  width: 20px; height: 20px;
+  width: 15px; height: 15px;
   border: 2px solid var(--border);
 }
-.curio-icon-notes::before { left: 6px; top: 9px; background: #ffe08a; transform: rotate(-6deg); }
-.curio-icon-notes::after { left: 17px; top: 13px; background: #8fd6c4; transform: rotate(5deg); }
+.curio-icon-notes::before { left: 5px; top: 7px; background: #ffe08a; transform: rotate(-6deg); }
+.curio-icon-notes::after { left: 13px; top: 10px; background: #8fd6c4; transform: rotate(5deg); }
 
 /* 点开小物件弹出的俏皮话气泡，跟 npc-bubble 是同一套视觉语言但更轻量 */
 .curio-tooltip {
@@ -203,8 +181,9 @@
 }
 
 @media (max-width: 700px) {
-  .curio-shelf-items { gap: 12px; }
-  .curio-icon { width: 38px; height: 38px; }
+  .curio-shelf-items { gap: 8px; }
+  .curio-icon { width: 28px; height: 28px; }
+  .curio-label { display: none; }
 }
 
 /* 拍立得点开的相册弹层，跟简历内容板块（.overlay/.panel）是分开的两套 DOM，
@@ -269,15 +248,4 @@
   border: 3px solid var(--border);
   border-radius: 3px;
   background: #ddd;
-}
-/* 接委托那组没有真实打码，靠像素化 canvas 挡脸，容器本身不是 <img>，
-   内部塞进来的 canvas 手动撑满 */
-.curio-lightbox-tile {
-  overflow: hidden;
-  padding: 0;
-}
-.curio-lightbox-tile canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
 }

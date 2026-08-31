@@ -7,15 +7,22 @@
   padding: 0 16px 24px;
 }
 
+/* 外壳负责统一的边框/圆角/投影，房间画布和桌角好物都是壳里的内容，
+   不再各自带一圈边框——之前是页面里上下两个分开的板块，现在是一个板块
+   里嵌两个子区域，overflow:hidden 顺带把下面桌角好物的下边角也裁成圆角 */
+.room-shell {
+  position: relative;
+  border: 4px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.3);
+}
+
 .room {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: var(--wall);
-  border: 4px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 8px 0 rgba(0,0,0,0.3);
   image-rendering: pixelated;
 }
 

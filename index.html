@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>李梦媛 · 像素小屋简历</title>
 <meta name="description" content="李梦媛的互动式像素风简历房间">
-<link rel="stylesheet" href="css/base.css?v=15">
-<link rel="stylesheet" href="css/room.css?v=15">
-<link rel="stylesheet" href="css/panel.css?v=15">
-<link rel="stylesheet" href="css/resume-mode.css?v=15">
-<link rel="stylesheet" href="css/curio.css?v=15">
+<link rel="stylesheet" href="css/base.css?v=16">
+<link rel="stylesheet" href="css/room.css?v=16">
+<link rel="stylesheet" href="css/panel.css?v=16">
+<link rel="stylesheet" href="css/resume-mode.css?v=16">
+<link rel="stylesheet" href="css/curio.css?v=16">
 </head>
 <body>
 
@@ -21,27 +21,23 @@
     <div class="hud-progress-badge">
       <span id="hudProgress" class="hud-progress"></span>
     </div>
-    <div class="hud-actions">
-      <button id="soundToggle" class="pixel-btn" aria-pressed="false">🔊 音效</button>
-      <button id="bgmToggle" class="pixel-btn" aria-pressed="false">🎵 音乐</button>
-      <button id="modeToggle" class="pixel-btn" aria-pressed="false">📄 简历模式</button>
-    </div>
   </header>
 
+  <!-- 音效/音乐/简历模式这三个开关原来在这里的按钮，现在分别挪去给桌角好物的
+       耳机/手柄/简历（原"闲书"）三个物件了，房间和桌角好物合并成一个板块，
+       内嵌小板块而不是页面里上下两块各自带边框的样子 -->
   <main class="room-frame">
-    <div class="room" id="room" aria-label="可点击的像素小屋，点击道具查看对应经历"></div>
-  </main>
-
-  <!-- 纯装饰彩蛋区，跟"已探索 X/8"的简历板块无关，点一下看一句俏皮话，撑一下大屏幕下房间以外的空间 -->
-  <section class="curio-shelf" aria-label="桌角好物，点开看小彩蛋，跟简历内容无关">
-    <div class="curio-shelf-inner">
-      <div class="curio-shelf-title">桌角好物 <span class="curio-shelf-hint">点一下试试</span></div>
-      <div class="curio-shelf-items" id="curioItems"></div>
+    <div class="room-shell">
+      <div class="room" id="room" aria-label="可点击的像素小屋，点击道具查看对应经历"></div>
+      <div class="curio-shelf" aria-label="桌角好物，点开看小彩蛋/切换音效音乐/进入简历模式">
+        <div class="curio-shelf-items" id="curioItems"></div>
+      </div>
     </div>
-  </section>
+  </main>
 
   <nav class="item-bar" id="itemBar" aria-label="经历板块快捷入口"></nav>
 
+  <button id="backToRoom" class="pixel-btn resume-back-btn" hidden>🏠 回到房间</button>
   <section id="resumeMode" class="resume-mode" hidden></section>
 
   <div class="overlay" id="overlay" hidden>
@@ -55,18 +51,18 @@
     </div>
   </div>
 
-  <script src="js/content.js?v=15"></script>
-  <script src="js/sound.js?v=15"></script>
-  <script src="js/bgm.js?v=15"></script>
-  <script src="js/pixelate.js?v=15"></script>
-  <script src="js/render.js?v=15"></script>
-  <script src="js/typewriter.js?v=15"></script>
-  <script src="js/contact.js?v=15"></script>
-  <script src="js/character.js?v=15"></script>
-  <script src="js/panel.js?v=15"></script>
-  <script src="js/room.js?v=15"></script>
-  <script src="js/greeting.js?v=15"></script>
-  <script src="js/curio.js?v=15"></script>
-  <script src="js/main.js?v=15"></script>
+  <script src="js/content.js?v=16"></script>
+  <script src="js/sound.js?v=16"></script>
+  <script src="js/bgm.js?v=16"></script>
+  <script src="js/pixelate.js?v=16"></script>
+  <script src="js/render.js?v=16"></script>
+  <script src="js/typewriter.js?v=16"></script>
+  <script src="js/contact.js?v=16"></script>
+  <script src="js/character.js?v=16"></script>
+  <script src="js/panel.js?v=16"></script>
+  <script src="js/room.js?v=16"></script>
+  <script src="js/greeting.js?v=16"></script>
+  <script src="js/curio.js?v=16"></script>
+  <script src="js/main.js?v=16"></script>
 </body>
 </html>

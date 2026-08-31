@@ -60,11 +60,6 @@ button,
   cursor: url('../assets/cursor/arrow.svg') 4 4, pointer;
 }
 
-.hud-actions {
-  display: flex;
-  gap: 8px;
-}
-
 .pixel-btn {
   background: linear-gradient(180deg, #cfa06c 0%, #a97a4a 100%);
   border: 3px solid var(--border);
