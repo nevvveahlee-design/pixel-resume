@@ -8,9 +8,7 @@
 }
 
 .resume-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 3px solid var(--border); }
-.resume-header h1 { font-family: var(--font-pixel); font-size: 1.4rem; margin-bottom: 6px; }
-.resume-tagline { color: var(--wood); font-weight: 600; margin-bottom: 8px; }
-.resume-intro { color: #4a3f5e; line-height: 1.7; }
+.resume-header h1 { font-family: var(--font-pixel); font-size: 1.4rem; margin-bottom: 0; }
 
 .resume-section { margin-bottom: 28px; }
 .resume-section h2 {
@@ -30,6 +28,12 @@
   z-index: 50;
   display: flex;
   gap: 8px;
+}
+/* display:flex 的优先级跟浏览器给 [hidden] 元素默认加的 display:none 打平，
+   两条规则谁在样式表里排后面谁赢——这条不写的话，上面这条 display:flex
+   会把 hidden 属性直接盖掉，导致按钮组不管 hidden 是否为 true 都常驻显示 */
+.resume-mode-actions[hidden] {
+  display: none;
 }
 /* <a class="pixel-btn"> 下载按钮，跟 <button class="pixel-btn"> 视觉上是同一套样式，
    但 <a> 默认有下划线/不同的行高，去掉这些差异保证两个按钮看着一致 */

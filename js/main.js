@@ -8,6 +8,9 @@
     document.getElementById('hudTagline').textContent = meta.tagline;
   }
 
+  // 简历文字版只放正经履历：不放"关于我"彩蛋、不放联系方式（那个板块本身是
+  // 靠点按钮一步步显示手机号/邮箱的交互设计，摊成纯文字没有意义），
+  // 名字下面的 slogan/自我介绍段落也一并去掉，直接从名字跳到第一个板块。
   function renderResumeMode() {
     var root = document.getElementById('resumeMode');
     var meta = window.RESUME_DATA.meta;
@@ -16,18 +19,12 @@
     header.className = 'resume-header';
     var h1 = document.createElement('h1');
     h1.textContent = meta.name + '（' + meta.nameEn + '）';
-    var tagline = document.createElement('p');
-    tagline.className = 'resume-tagline';
-    tagline.textContent = meta.tagline;
-    var intro = document.createElement('p');
-    intro.className = 'resume-intro';
-    intro.textContent = meta.intro;
     header.appendChild(h1);
-    header.appendChild(tagline);
-    header.appendChild(intro);
     root.appendChild(header);
 
     window.RESUME_DATA.sections.forEach(function (section) {
+      if (section.isContact || section.id === 'about') return;
+
       var block = document.createElement('section');
       block.className = 'resume-section';
 
@@ -35,18 +32,14 @@
       h2.textContent = section.title;
       block.appendChild(h2);
 
-      if (section.isContact) {
-        block.appendChild(PixelResume.contact.renderPanel());
-      } else {
-        section.tabs.forEach(function (tab) {
-          if (section.tabs.length > 1) {
-            var h3 = document.createElement('h3');
-            h3.textContent = tab.label;
-            block.appendChild(h3);
-          }
-          block.appendChild(PixelResume.render.renderBlocks(tab.blocks));
-        });
-      }
+      section.tabs.forEach(function (tab) {
+        if (section.tabs.length > 1) {
+          var h3 = document.createElement('h3');
+          h3.textContent = tab.label;
+          block.appendChild(h3);
+        }
+        block.appendChild(PixelResume.render.renderBlocks(tab.blocks));
+      });
       root.appendChild(block);
     });
   }
