@@ -21,15 +21,8 @@
 }
 .resume-section h3 { font-size: 0.95rem; color: var(--ink); margin: 14px 0 8px; }
 
-/* metrics/tags 在房间面板里是像素方块/胶囊标签，这里换成纯文字，
-   不要边框、不要底色，跟其它段落一样是普通的字 */
-.resume-metrics-plain {
-  list-style: disc;
-  padding-left: 1.4em;
-  margin: 8px 0 14px;
-  color: var(--ink);
-  line-height: 1.8;
-}
+/* tags 在房间面板里是胶囊标签，这里换成纯文字，不要边框、不要底色，
+   跟其它段落一样是普通的字（metrics 直接不渲染，见 render.js 里的注释） */
 .resume-tags-plain {
   color: #4a3f5e;
   line-height: 1.7;

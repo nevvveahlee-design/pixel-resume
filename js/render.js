@@ -194,18 +194,15 @@
     return frag;
   }
 
-  // 简历文字版专用：metrics/tags 在房间面板里是像素风的数字方块/胶囊标签，
-  // 摊成一整页文字的简历里那种边框方块视觉上还是"按钮感"很重——
-  // 换成纯文字（数字列表 / 逗号分隔的一行），其余板块类型跟房间面板共用同一套渲染。
+  // 简历文字版专用：metrics 在房间面板里是像素风的数字方块，摊成一整页文字的
+  // 简历里不管是方块还是改成列表，都是"把数字单独摘出来"，用户要的是数字原本
+  // 揉在句子里的样子——所以这里直接不渲染，凡是有 metrics 的板块都在 content.js
+  // 里配了对应的 resumeBlocks（数字写回原句），main.js 优先用 resumeBlocks；
+  // 唯一没配 resumeBlocks 的 AI 项目板块，是因为它的数字本来就已经在段落文字里了。
+  // tags 不是数字，只是工具/课程名一类的词，换成逗号分隔的一行文字就行，不用整个去掉。
   var resumeRenderers = Object.assign({}, renderers, {
-    metrics: function (b) {
-      var ul = el('ul', 'resume-metrics-plain');
-      b.items.forEach(function (m) {
-        var li = document.createElement('li');
-        li.textContent = m.value + '　' + m.label;
-        ul.appendChild(li);
-      });
-      return ul;
+    metrics: function () {
+      return document.createDocumentFragment();
     },
     tags: function (b) {
       var p = el('p', 'resume-tags-plain');

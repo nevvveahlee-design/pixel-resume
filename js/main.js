@@ -9,11 +9,14 @@
   }
 
   // 简历文字版只放正经履历：不放"关于我"彩蛋、不放联系方式（那个板块本身是
-  // 靠点按钮一步步显示手机号/邮箱的交互设计，摊成纯文字没有意义），
+  // 靠点按钮一步步显示手机号/邮箱的交互设计，摊成纯文字没有意义）、不放小卡
+  // 板块、cosplay 只保留"账号运营"（"接委托日常"标了 resumeSkip，见 content.js）；
   // 名字下面的 slogan/自我介绍段落也一并去掉，直接从名字跳到第一个板块。
+  // 每个 tab 优先用 resumeBlocks（数字揉回原句的版本），没配的就退回 tab.blocks。
   function renderResumeMode() {
     var root = document.getElementById('resumeMode');
     var meta = window.RESUME_DATA.meta;
+    var SKIP_SECTIONS = { about: true, photocards: true };
 
     var header = document.createElement('div');
     header.className = 'resume-header';
@@ -23,7 +26,10 @@
     root.appendChild(header);
 
     window.RESUME_DATA.sections.forEach(function (section) {
-      if (section.isContact || section.id === 'about') return;
+      if (section.isContact || SKIP_SECTIONS[section.id]) return;
+
+      var visibleTabs = section.tabs.filter(function (tab) { return !tab.resumeSkip; });
+      if (!visibleTabs.length) return;
 
       var block = document.createElement('section');
       block.className = 'resume-section';
@@ -32,13 +38,13 @@
       h2.textContent = section.title;
       block.appendChild(h2);
 
-      section.tabs.forEach(function (tab) {
-        if (section.tabs.length > 1) {
+      visibleTabs.forEach(function (tab) {
+        if (visibleTabs.length > 1) {
           var h3 = document.createElement('h3');
           h3.textContent = tab.label;
           block.appendChild(h3);
         }
-        block.appendChild(PixelResume.render.renderBlocksForResume(tab.blocks));
+        block.appendChild(PixelResume.render.renderBlocksForResume(tab.resumeBlocks || tab.blocks));
       });
       root.appendChild(block);
     });
