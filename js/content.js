@@ -208,12 +208,16 @@ window.RESUME_DATA = {
     {
       id: 'photocards',
       prop: { label: '收纳盒', icon: '🃏', image: 'assets/room/sprites/dresser.png', rect: [14, 56, 14, 18] },
-      title: '小卡交易日常',
+      title: 'K-pop 小卡贩卖',
       tabs: [{
         label: '追星卖小卡',
         blocks: [
-          { type: 'paragraph', text: '追星圈子里的"小生意"：选品、定价、供需判断、和陌生人建立信任——这些能力其实和电商采销异曲同工。' },
-          { type: 'tags', title: '这段经历练到的能力', items: ['选品定价', '供需判断', '信任建立', '交易履约'] },
+          { type: 'bullets', items: [
+            '**价格机会识别**：追星收卡过程中发现海外平台价格与国内市场存在价格差异，开始尝试海外购入并在国内转卖。',
+            '**成本与收益测算**：对比煤炉、X、poca 与闲鱼同款小卡的价格，结合成员热度、版本、品相及购卡、转运和快递费用，判断商品的购买和转卖价值。',
+            '**多渠道销售**：通过闲鱼发布实拍图和品相说明，并在校园群根据同学的成员偏好和收卡需求进行推荐、沟通和议价。',
+            '**全流程交易管理**：负责海外卖家、快递和国内买家之间的沟通，完成验卡、包装、发货及物流跟踪，降低运输损坏和交易纠纷风险。'
+          ]},
           { type: 'gallery', dir: 'assets/photos', files: ['photocard-1.jpg', 'photocard-2.jpg', 'photocard-3.jpg'] }
         ]
       }]
