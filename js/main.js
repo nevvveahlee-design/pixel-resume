@@ -53,19 +53,20 @@
 
   // 简历模式的开关按钮搬进桌角好物里了（原来的"闲书"，现在叫"简历"），
   // 房间和桌角好物现在是合并在一起的同一个板块，所以进简历模式时只需要
-  // 藏 .room-frame 这一个容器；退出的入口是下面这个常驻的"回到房间"按钮
-  // ——它必须在简历模式下也能点到，不能塞进跟着房间一起被隐藏的地方。
+  // 藏 .room-frame 这一个容器；退出+下载 PDF 的入口是下面这两个常驻按钮
+  // ——它们必须在简历模式下也能点到，不能塞进跟着房间一起被隐藏的地方。
   function initResumeMode() {
     var roomFrame = document.querySelector('.room-frame');
     var itemBar = document.getElementById('itemBar');
     var resumeMode = document.getElementById('resumeMode');
+    var actions = document.getElementById('resumeModeActions');
     var backBtn = document.getElementById('backToRoom');
 
     function setResumeMode(showResume) {
       resumeMode.hidden = !showResume;
       roomFrame.hidden = showResume;
       itemBar.hidden = showResume;
-      backBtn.hidden = !showResume;
+      actions.hidden = !showResume;
     }
 
     backBtn.addEventListener('click', function () { setResumeMode(false); });

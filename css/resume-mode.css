@@ -23,15 +23,24 @@
 }
 .resume-section h3 { font-size: 0.95rem; color: var(--ink); margin: 14px 0 8px; }
 
-.resume-back-btn {
+.resume-mode-actions {
   position: fixed;
   top: 16px;
   right: 16px;
   z-index: 50;
+  display: flex;
+  gap: 8px;
+}
+/* <a class="pixel-btn"> 下载按钮，跟 <button class="pixel-btn"> 视觉上是同一套样式，
+   但 <a> 默认有下划线/不同的行高，去掉这些差异保证两个按钮看着一致 */
+.resume-mode-actions a.pixel-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
 @media print {
-  .hud, .room-frame, .item-bar, .resume-back-btn { display: none !important; }
+  .hud, .room-frame, .item-bar, .resume-mode-actions { display: none !important; }
   .resume-mode { display: block !important; box-shadow: none; }
   body { background: #fff; }
 }
