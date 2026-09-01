@@ -198,37 +198,37 @@
    靠这个撑"游戏感"（角色本身已经有 idle 呼吸帧，见 character.js）。
    三盆植物用同一套摇摆关键帧，靠不同的时长/延迟错开，不然三盆一起摇会很假。 */
 @keyframes plant-sway {
-  0%, 100% { transform: rotate(-1.5deg); }
-  50% { transform: rotate(1.5deg); }
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
 }
 .room-plant,
 .room-plant2,
 .room-plant3 {
   transform-origin: 50% 100%;
-  animation: plant-sway 5s ease-in-out infinite;
+  animation: plant-sway 3.5s ease-in-out infinite;
 }
-.room-plant { animation-duration: 5.5s; animation-delay: -1s; }
-.room-plant2 { animation-duration: 4.6s; animation-delay: -2.4s; }
-.room-plant3 { animation-duration: 5.2s; animation-delay: -0.3s; }
+.room-plant { animation-duration: 3.8s; animation-delay: -1s; }
+.room-plant2 { animation-duration: 3.2s; animation-delay: -2.4s; }
+.room-plant3 { animation-duration: 3.6s; animation-delay: -0.3s; }
 
 /* 窗光斑驳闪烁，模拟树影/云影从窗户透进来晃动的感觉，不然那道光是死的 */
 @keyframes window-light-flicker {
-  0%, 100% { opacity: 0.85; }
+  0%, 100% { opacity: 0.6; }
   45% { opacity: 1; }
-  70% { opacity: 0.7; }
+  70% { opacity: 0.45; }
 }
 .room-window-light {
-  animation: window-light-flicker 7s ease-in-out infinite;
+  animation: window-light-flicker 4.5s ease-in-out infinite;
 }
 
 /* 软木板上的便签被风轻轻吹动，在原来贴歪的角度附近小幅摆动 */
 @keyframes note-flutter-1 {
-  0%, 100% { transform: rotate(-8deg); }
-  50% { transform: rotate(-5deg); }
+  0%, 100% { transform: rotate(-11deg); }
+  50% { transform: rotate(-3deg); }
 }
 @keyframes note-flutter-2 {
-  0%, 100% { transform: rotate(6deg); }
-  50% { transform: rotate(9deg); }
+  0%, 100% { transform: rotate(2deg); }
+  50% { transform: rotate(11deg); }
 }
 .room-corkboard .sticky-note.n1 { animation: note-flutter-1 4.2s ease-in-out infinite; }
 .room-corkboard .sticky-note.n2 { animation: note-flutter-2 3.8s ease-in-out infinite; animation-delay: -1.5s; }
