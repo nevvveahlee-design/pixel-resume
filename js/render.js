@@ -194,5 +194,34 @@
     return frag;
   }
 
-  PixelResume.render = { renderBlocks: renderBlocks, inlineFormat: inlineFormat };
+  // 简历文字版专用：metrics/tags 在房间面板里是像素风的数字方块/胶囊标签，
+  // 摊成一整页文字的简历里那种边框方块视觉上还是"按钮感"很重——
+  // 换成纯文字（数字列表 / 逗号分隔的一行），其余板块类型跟房间面板共用同一套渲染。
+  var resumeRenderers = Object.assign({}, renderers, {
+    metrics: function (b) {
+      var ul = el('ul', 'resume-metrics-plain');
+      b.items.forEach(function (m) {
+        var li = document.createElement('li');
+        li.textContent = m.value + '　' + m.label;
+        ul.appendChild(li);
+      });
+      return ul;
+    },
+    tags: function (b) {
+      var p = el('p', 'resume-tags-plain');
+      p.textContent = (b.title ? b.title + '：' : '') + b.items.join('、');
+      return p;
+    }
+  });
+
+  function renderBlocksForResume(blocks) {
+    var frag = document.createDocumentFragment();
+    (blocks || []).forEach(function (b) {
+      var fn = resumeRenderers[b.type];
+      if (fn) frag.appendChild(fn(b));
+    });
+    return frag;
+  }
+
+  PixelResume.render = { renderBlocks: renderBlocks, renderBlocksForResume: renderBlocksForResume, inlineFormat: inlineFormat };
 })();

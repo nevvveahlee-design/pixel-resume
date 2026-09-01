@@ -38,7 +38,7 @@
           h3.textContent = tab.label;
           block.appendChild(h3);
         }
-        block.appendChild(PixelResume.render.renderBlocks(tab.blocks));
+        block.appendChild(PixelResume.render.renderBlocksForResume(tab.blocks));
       });
       root.appendChild(block);
     });
