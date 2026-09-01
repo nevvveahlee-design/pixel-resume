@@ -131,38 +131,37 @@ window.RESUME_DATA = {
     {
       id: 'ai-project',
       prop: { label: '笔记本', icon: '💻', image: 'assets/room/sprites/laptop.png', rect: [87, 54, 6, 10] },
-      title: 'AI 战略分析溯源助手',
+      title: '政策市场双线分析 Skill（strategy-policy-market-report）',
       tabs: [{
         label: 'Vibe-Coding & 产品设计',
         blocks: [
           { type: 'meta', items: [
             ['角色', 'Vibe-Coding & 产品设计'],
             ['时间', '2026.07 – 至今'],
-            ['项目地址', 'https://nevvveahlee-design.github.io/ai-strategy-dossier/']
+            ['项目地址', 'https://github.com/nevvveahlee-design/policy-market-fused-report']
           ]},
           { type: 'metrics', items: [
-            { value: '27', label: '处理真实机构报告' },
+            { value: '25', label: '处理真实机构报告' },
             { value: '75', label: '沉淀经溯源校验的分析方法' },
-            { value: '−33%', label: 'Prompt Caching 降低 token 成本' }
+            { value: '−33%', label: 'Prompt Caching 降低 token 成本' },
+            { value: '17', label: '自动化测试覆盖' }
           ]},
           { type: 'heading', text: '需求洞察' },
           { type: 'paragraph', text:
-            '从自身研究新公司/新赛道时的信息检索痛点出发，观察到 LLM 给出的分析结论信息全但无法验证依据，且属于一次性产出、无法复用；' +
-            '区别于 ChatGPT/CC 等 AI 工具信息全面但易出现 AI 幻觉的问题，把"证据可溯源、方法可复用"作为产品差异化切入点。' },
+            '从自身研究新公司/新赛道时的信息检索痛点出发，观察到 LLM 给出的分析结论信息全但无法验证依据，且属于一次性产出、无法复用，' +
+            '把"证据可溯源、方法可复用"作为差异化方向；分析后发现溯源校验只能验证定性结论，定量结论需要独立复算，这是两类不同的验证机制。' },
           { type: 'heading', text: '产品设计与 MVP 定义' },
           { type: 'paragraph', text:
-            '设计"权威报告→抽取候选方法→证据溯源校验→沉淀可复用方法库→按公司检索应用"的核心链路；核算真实 API 成本后，' +
-            '判断该成本不适合作为默认高频体验，据此将 MVP 拆分为"确定性方法检索"（免费、即时）与"联网深度分析"（按需触发、验证案例）两层，完成功能取舍。' },
+            '设计"权威报告→抽取方法→溯源校验→沉淀方法库→按公司检索"的核心链路；核算真实 API 成本后，将 MVP 拆分为确定性方法检索（免费即时）与联网深度分析（按需触发）两层。' +
+            '后续将产品从网页 demo 重构为可安装、可复用的 Claude Code Skill，采用政策与商业双线并行架构，并设计"先问清楚战略问题、按问题类型决定要不要做定量测算"的分支逻辑，避免不必要场景下的过度计算。' },
           { type: 'heading', text: 'AI 能力设计' },
           { type: 'paragraph', text:
-            '针对通用大模型结论无据可查、无法复用的问题，设计 Framework 识别、Logic Pattern 沉淀、Evidence Grounding 三层 workflow，' +
-            '要求每条提取结论必须能在原文中定位到出处，无法定位则拒绝入库，将可信度校验从"模型自评"改为确定性规则；' +
-            '并用文本相似度算法对方法库做去重校验，确认规模扩展后未出现语义重复。' },
+            '设计 Framework 识别、Logic Pattern 沉淀、Evidence Grounding 三层 workflow，要求结论必须能在原文中定位出处，否则拒绝入库，将可信度校验从模型自评改为确定性规则；并用文本相似度算法对方法库做去重校验。' +
+            '针对商业分析中的定量结论，设计独立的"对抗性复核"机制——用第二次独立推导而非文本比对来验证核心数字，同时要求每个测算显式标注"哪一个假设一旦错了会推翻结论"，将定量分析的可信度校验方式与定性分析区分开来。' },
           { type: 'heading', text: '产品落地' },
           { type: 'paragraph', text:
-            '独立完成需求定义、pipeline 设计、prompt 设计与迭代，使用 Vibe-Coding 工具推进工程实现；' +
-            '定位并推动修复编码乱码、输出截断、接口限流无重试等真实生产问题；' +
-            '处理 27 份真实机构报告，沉淀 75 条经溯源校验的分析方法；通过 Prompt Caching 降低约 33% 重复上下文的 token 成本。' }
+            '独立完成需求定义、pipeline 与 prompt 设计，用 Vibe-Coding 工具落地；处理 25 份机构报告，沉淀 75 条溯源方法；Prompt Caching 降低约 33% token 成本；' +
+            '开源发布为 Claude Code Skill，配 17 项自动化测试与一键安装脚本，并支持脱离 Claude Code 的手动使用方案。' }
         ]
       }]
     },
